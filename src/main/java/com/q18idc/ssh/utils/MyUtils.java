@@ -327,4 +327,9 @@ public class MyUtils {
         }
         return false;
     }
+
+    public static void main(String[] args) {
+        String s = "asd";
+        System.out.println(MyUtils.strIsLetter(s));
+    }
 }

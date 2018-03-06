@@ -46,26 +46,26 @@
     <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
         <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">用户信息</div>
         <div style="margin-bottom:10px">
-            <input name="username" class="easyui-textbox" required="true"  label="用户名:" style="width:100%">
+            <input name="username" class="easyui-textbox" required="true"   label="用户名:" style="width:100%">
         </div>
         <div style="margin-bottom:10px">
-            <input name="password" class="easyui-textbox" required="true"  label="密码:" style="width:100%">
+            <input name="password" class="easyui-passwordbox" required="true"  label="密码:" style="width:100%">
         </div>
         <div style="margin-bottom:10px">
             <input name="phone" class="easyui-textbox" required="true" validType="phone"   label="电话:" style="width:100%">
         </div>
         <div style="margin-bottom:10px">
-            <input name="email" class="easyui-textbox" required="true" validType="email"   label="邮箱:"
+            <input name="email" class="easyui-textbox" required="true"  validType="email"   label="邮箱:"
                    style="width:100%">
         </div>
         <div style="margin-bottom:10px">
-            <select class="easyui-combobox" editable="false" required="true"  label="性别:" name="sex" style="width: 100%">
+            <select class="easyui-combobox" required="true" editable="false"   label="性别:" name="sex" style="width: 100%">
                 <option value="男">男</option>
                 <option value="女">女</option>
             </select>
         </div>
         <div style="margin-bottom:10px">
-            <input name="birthday" editable="false" class="easyui-datetimebox" data-options="required:true,showSeconds:true" label="生日:"
+            <input name="birthday" required="true"  editable="false" class="easyui-datetimebox" data-options="showSeconds:true" label="生日:"
                    style="width:100%"/>
         </div>
     </form>

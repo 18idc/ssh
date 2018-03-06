@@ -20,7 +20,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    boolean addUpdate(User user);
+    String addUpdate(User user);
 
     /**
      * 根据ID删除

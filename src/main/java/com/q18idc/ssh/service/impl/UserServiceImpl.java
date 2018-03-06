@@ -4,6 +4,7 @@ import com.q18idc.ssh.dao.UserDao;
 import com.q18idc.ssh.entity.PageBean;
 import com.q18idc.ssh.entity.User;
 import com.q18idc.ssh.service.UserService;
+import com.q18idc.ssh.utils.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,11 +40,36 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public boolean addUpdate(User user) {
+    public String addUpdate(User user) {
         if (user != null) {
-            return userDao.addUpdate(user);
+            if(MyUtils.isEmpty(user.getUsername())){
+                return "请输入用户名";
+            }else if(MyUtils.isEmpty(user.getPassword())){
+                return "请输入密码";
+            }else if(MyUtils.isSpecialChar(user.getPassword())){
+                return "密码包含特殊字符，请重新输入";
+            } else if(MyUtils.isEmpty(user.getPhone())){
+                return "请输入电话";
+            }else if(!MyUtils.isMobileNum(user.getPhone())){
+                return "请输入合法的手机号";
+            }else if(MyUtils.isEmpty(user.getEmail())){
+                return "请输入邮箱";
+            }else if(!MyUtils.isEmail(user.getEmail())){
+                return "邮箱格式不正确";
+            }else if(MyUtils.isEmpty(user.getSex())){
+                return "请选择性别";
+            }else if(!("男".equalsIgnoreCase(user.getSex()) || "女".equalsIgnoreCase(user.getSex()))){
+                return "请重新选择性别";
+            }else {
+                boolean b = userDao.addUpdate(user);
+                if(b){
+                    return "操作成功";
+                }else {
+                    return "操作失败";
+                }
+            }
         }
-        return false;
+        return "操作失败";
     }
 
     /**

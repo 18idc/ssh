@@ -120,6 +120,10 @@ public class UserAction extends ActionSupport {
         this.id = id;
     }
 
+    /**
+     * 添加或修改用户
+     * @throws IOException
+     */
     public void addUpdate() throws IOException {
         User user = new User();
         user.setId(id);
@@ -129,15 +133,14 @@ public class UserAction extends ActionSupport {
         user.setEmail(email);
         user.setSex(sex);
         user.setBirthday(new Timestamp(MyUtils.strTimeToDate(birthday,"yyyy-MM-dd hh:mm:ss").getTime()));
-        boolean b =  userService.addUpdate(user);
+        String b =  userService.addUpdate(user);
         JsonResult jsonResult = new JsonResult();
-        if(b){
+        if(b.indexOf("成功") !=  -1){
             jsonResult.setFlag(true);
-            jsonResult.setMsg("操作成功");
         }else {
             jsonResult.setFlag(false);
-            jsonResult.setMsg("操作失败");
         }
+        jsonResult.setMsg(b);
         HttpServletResponse response = ServletActionContext.getResponse();
         PrintWriter out = response.getWriter();
         out.print(JSON.toJSONString(jsonResult));
