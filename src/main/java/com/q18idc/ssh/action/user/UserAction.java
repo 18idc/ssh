@@ -10,16 +10,15 @@ import com.q18idc.ssh.entity.User;
 import com.q18idc.ssh.service.UserService;
 import com.q18idc.ssh.utils.MyUtils;
 import org.apache.struts2.ServletActionContext;
+import org.hswebframework.expands.office.excel.ExcelIO;
+import org.hswebframework.expands.office.excel.config.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author q18idc.com QQ993143799
@@ -39,6 +38,34 @@ public class UserAction extends ActionSupport {
     private String sex;
     private String birthday;
     private int id;
+
+    private File file;
+    private String fileFileName;//文件名
+    private String fileContentType;//文件类型
+
+    public String getFileContentType() {
+        return fileContentType;
+    }
+
+    public void setFileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
+    }
+
+    public String getFileFileName() {
+        return fileFileName;
+    }
+
+    public void setFileFileName(String fileFileName) {
+        this.fileFileName = fileFileName;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
 
     public String getKey() {
         return key;
@@ -213,5 +240,90 @@ public class UserAction extends ActionSupport {
         mapList.add(map2);
         out.print(JSON.toJSONString(mapList));//返回json格式数据
         out.close();
+    }
+
+    /**
+     *Excel上传 导入
+     */
+    public void upload() throws Exception {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        Map<String,Object> map = new HashMap<>();
+        int sun = 0;//总条数
+        int success = 0;//成功条数
+        int error = 0;//失败条数
+        PrintWriter out = response.getWriter();
+        if(file!=null){
+//            System.err.println(file);
+//            System.err.println(fileFileName);
+//            System.err.println(fileContentType);
+
+            InputStream inputStream = new FileInputStream(file);
+
+            List<Map<String, Object>> list = ExcelIO.read2Map(inputStream);
+            sun = list.size();
+            for (Map<String, Object> stringObjectMap : list) {
+                User user  = new User();
+                user.setUsername(stringObjectMap.get("用户名").toString());
+                user.setPassword(stringObjectMap.get("密码").toString());
+                user.setPhone(stringObjectMap.get("电话").toString());
+                user.setEmail(stringObjectMap.get("邮箱").toString());
+                user.setSex(stringObjectMap.get("性别").toString());
+                Date birthday = (Date) stringObjectMap.get("生日");
+                user.setBirthday(new Timestamp(birthday.getTime()));
+                String s = userService.addUpdate(user);
+                if(s.indexOf("成功") == -1){
+                    error++;
+                }else {
+                    success++;
+                }
+            }
+
+            map.put("flag",true);
+            map.put("msg","总条数：" + sun + " 成功：" + success + "条 失败：" + error + "条");
+        }else {
+            map.put("flag",false);
+            map.put("msg","导入失败");
+        }
+        out.print(JSON.toJSONString(map));
+    }
+
+    /**
+     * Excel导出
+     */
+    public void export() throws UnsupportedEncodingException {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        User user = new User();
+        user.setPage(1);
+        user.setRows(1000);
+        user.setKey("");
+        PageBean pageBean = userService.queryForPage(user);
+        List list = pageBean.getList();
+
+        List<Header> headers = new LinkedList<>();
+        List<Object> data = new ArrayList<>();
+        for (Object o : list) {
+            data.add(o);
+        }
+
+        headers.add(new Header("用户名","username"));
+        headers.add(new Header("密码","password"));
+        headers.add(new Header("电话","phone"));
+        headers.add(new Header("邮箱","email"));
+        headers.add(new Header("性别","sex"));
+        headers.add(new Header("生日","birthday"));
+
+        String fileName = "测试.xlsx";
+        //设置响应头和客户端保存文件名
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("multipart/form-data");
+        response.setHeader("Content-Disposition", "attachment;fileName*=UTF-8''" + URLEncoder.encode(fileName,"UTF-8"));
+        try {
+            OutputStream os = response.getOutputStream();
+            ExcelIO.write(os, headers, data);
+            os.flush();
+            os.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

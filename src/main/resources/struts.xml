@@ -14,7 +14,7 @@
     <!-- 设置浏览器是否缓存静态内容 -->
     <constant name="struts.serve.static.browserCache" value="false"/>
     <!-- 请求参数的编码方式 -->
-    <constant name="struts.i18n.encoding" value="utf-8"/>
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
     <!-- 每次HTTP请求系统都重新加载资源文件，有助于开发 -->
     <constant name="struts.i18n.reload" value="true"/>
     <!-- 文件上传最大值 -->

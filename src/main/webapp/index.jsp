@@ -12,6 +12,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/themes/jquery.insdep-extend.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/ajaxfileupload.js"></script>
 </head>
 <body>
 
@@ -38,6 +39,10 @@
 
     关键字：<input class="easyui-textbox" type="text" name="key" style="width:150px"/>
     <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchkey()">查询</a>
+
+    <input type="file" id="file" name="file"  class="easyui-linkbutton" />
+    <a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="fileupload();"  style="margin-right: 18px;">导入</a>
+    <a href="${pageContext.request.contextPath}/user/export.action" target="_blank" class="easyui-linkbutton" style="margin-right: 18px;">导出</a>
 
 </div>
 
@@ -77,6 +82,32 @@
        onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
 </div>
 <script type="text/javascript">
+
+    function fileupload() {
+        if ($("#file").val() == "" ) {
+            $.messager.alert('提示', '请选择需要上传的Excel文件', "error", function () {
+            });
+            return;
+        }
+        $.ajaxFileUpload({
+            url: '${pageContext.request.contextPath}/user/upload.action',
+            secureuri: false,
+            fileElementId: 'file',
+            dataType: 'json',
+            success: function (data,status) {
+                $('#file').val('');
+                if (data.flag){
+                    $.messager.alert('成功', data.msg, "success", function () {});
+                }else {
+                    $.messager.alert('失败', data.msg, "error", function () {});
+                }
+                $('#dg').datagrid('reload');
+                $("#shuaxin").click();
+            }
+        });
+
+    }
+
     var url;
 
     function newUser() {
