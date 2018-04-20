@@ -40,8 +40,10 @@ public class UserAction extends ActionSupport {
     private int id;
 
     private File file;
-    private String fileFileName;//文件名
-    private String fileContentType;//文件类型
+    //文件名
+    private String fileFileName;
+    //文件类型
+    private String fileContentType;
 
     public String getFileContentType() {
         return fileContentType;
@@ -248,9 +250,12 @@ public class UserAction extends ActionSupport {
     public void upload() throws Exception {
         HttpServletResponse response = ServletActionContext.getResponse();
         Map<String,Object> map = new HashMap<>();
-        int sun = 0;//总条数
-        int success = 0;//成功条数
-        int error = 0;//失败条数
+        //总条数
+        int sun = 0;
+        //成功条数
+        int success = 0;
+        //失败条数
+        int error = 0;
         PrintWriter out = response.getWriter();
         if(file!=null){
 //            System.err.println(file);
