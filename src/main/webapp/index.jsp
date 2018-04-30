@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib  uri="/struts-tags" prefix="s" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -177,7 +178,11 @@
 </script>
 
 <hr>
-<button id="shuaxin">获取统计</button>
+<s:a class="easyui-linkbutton" action="onetoone" namespace="/users"><s:param name="id" value="2" />一对一</s:a>
+<s:a class="easyui-linkbutton" action="onetomany" namespace="/users"><s:param name="id" value="2" />一对多</s:a>
+<s:a class="easyui-linkbutton" action="manytomany" namespace="/users"><s:param name="id" value="1" />多对多</s:a>
+<hr>
+<button id="shuaxin" class="easyui-linkbutton">获取统计</button>
 <div id="main" style="width: 600px;height:400px;"></div>
 <script type="text/javascript">
     $("#shuaxin").click(function () {

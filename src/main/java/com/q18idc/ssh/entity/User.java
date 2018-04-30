@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author q18idc.com QQ993143799
@@ -16,7 +17,7 @@ import java.sql.Timestamp;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends Condition{
+public class User extends Condition {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,4 +46,28 @@ public class User extends Condition{
     @Basic
     @Column(name = "username")
     private String username;
+
+
+    /**
+     * 一对一 用户关联用户卡
+     */
+    @OneToOne
+    @JoinColumn(name = "cid")
+    private UserCard userCard;
+
+    /**
+     * 一对多 用户下的所有银行卡
+     */
+    @OneToMany(mappedBy = "users")
+    private List<BankCard> bankCards;
+
+    /**
+     * 多对多  一个用户可以有多个银行
+     */
+    //创建一个中间表
+    @JoinTable(name = "user_bank"
+            , joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
+            , inverseJoinColumns = {@JoinColumn(name = "bank_id", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Bank> banks;
 }

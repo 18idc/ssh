@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by q18idc.com QQ993143799 on 2018/3/2
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;

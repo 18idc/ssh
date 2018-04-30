@@ -28,7 +28,7 @@
     <!-- 对于WebLogic,Orion,OC4J此属性应该设置成true -->
     <constant name="struts.dispatcher.parametersWorkaround" value="false"/>
 
-    <package name="basePackage" extends="struts-default" namespace="/user">
+    <package name="basePackage" extends="struts-default">
         <!--自定义拦截器堆栈-->
         <interceptors>
             <interceptor name="CharacterEncoding" class="CharacterEncoding"/>
@@ -40,9 +40,21 @@
 
         <!--使用自定义拦截器-->
         <default-interceptor-ref name="myStack"/>
+    </package>
+    
+    <package name="User" extends="basePackage" namespace="/user">
         <action name="*" class="com.q18idc.ssh.action.user.UserAction" method="{1}">
             <result name="success">/WEB-INF/jsp/result/success.jsp</result>
         </action>
     </package>
+
+    <package name="Users" extends="basePackage" namespace="/users">
+        <action name="*" class="com.q18idc.ssh.action.user.UserRelationAction" method="{1}">
+            <result name="success">/WEB-INF/jsp/result/success.jsp</result>
+        </action>
+    </package>
+
+    
+
 
 </struts>
