@@ -2,6 +2,8 @@ package com.q18idc.ssh.Interceptor;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,15 +15,9 @@ import javax.servlet.http.HttpServletResponse;
  * Created by q18idc.com QQ993143799 on 2017/12/22
  */
 public class CharacterEncodingInterceptor extends AbstractInterceptor {
+    @Getter
+    @Setter
     private String code = "UTF-8";
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     @Override
     public String intercept(ActionInvocation actionInvocation) throws Exception {

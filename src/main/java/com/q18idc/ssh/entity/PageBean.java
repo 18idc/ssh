@@ -1,54 +1,69 @@
 package com.q18idc.ssh.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class PageBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private List list;// 要返回的某一页的记录列表
-	private int allRow; // 总记录数
-	private int totalPage; // 总页数
-	private int currentPage; // 当前页
-	private int pageSize;// 每页记录数
+	/**
+	 * 要返回的某一页的记录列表
+	 */
+	@Getter
+	@Setter
+	private List list;
+
+	/**
+	 * 总记录数
+	 */
+	@Getter
+	@Setter
+	private int allRow;
+
+	/**
+	 * 总页数
+	 */
+	@Getter
+	@Setter
+	private int totalPage;
+
+	/**
+	 * 当前页
+	 */
+	@Getter
+	@Setter
+	private int currentPage;
+	/**
+	 * 每页记录数
+	 */
+	@Getter
+	@Setter
+	private int pageSize;
+
+	/**
+	 * 是否为第一页
+	 */
 	@SuppressWarnings("unused")
-	private boolean isFirstPage; // 是否为第一页
+	private boolean isFirstPage;
+
+	/**
+	 * 是否为最后一页
+	 */
 	@SuppressWarnings("unused")
-	private boolean isLastPage;// 是否为最后一页
-	@SuppressWarnings("unused")
-	private boolean hasPreviousPage; // 是否有前一页
-	@SuppressWarnings("unused")
-	private boolean hasNextPage;// 是否有下一页
-	
-	public List getList() {
-		return list;
-	}
-	public void setList(List list) {
-		this.list = list;
-	}
-	public int getAllRow() {
-		return allRow;
-	}
-	public void setAllRow(int allRow) {
-		this.allRow = allRow;
-	}
-	public int getTotalPage() {
-		return totalPage;
-	}
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-	}
-	public int getCurrentPage() {
-		return currentPage;
-	}
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
-	public int getPageSize() {
-		return pageSize;
-	}
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
+	private boolean isLastPage;
+
+	/**
+	 * 是否有前一页
+	 */
+	private boolean hasPreviousPage;
+
+	/**
+	 * 是否有下一页
+	 */
+	private boolean hasNextPage;
+
 	
     /**
      * 初始化分页信息

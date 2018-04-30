@@ -9,6 +9,8 @@ import com.q18idc.ssh.entity.PageBean;
 import com.q18idc.ssh.entity.User;
 import com.q18idc.ssh.service.UserService;
 import com.q18idc.ssh.utils.MyUtils;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.struts2.ServletActionContext;
 import org.hswebframework.expands.office.excel.ExcelIO;
 import org.hswebframework.expands.office.excel.config.Header;
@@ -28,126 +30,22 @@ public class UserAction extends ActionSupport {
     @Autowired
     private UserService userService;
 
-    private int page;
-    private int rows;
-    private String key;
-    private String username;
-    private String password;
-    private String phone;
-    private String email;
-    private String sex;
-    private String birthday;
-    private int id;
+    @Getter @Setter private int page;
+    @Getter @Setter private int rows;
+    @Getter @Setter private String key;
+    @Getter @Setter private String username;
+    @Getter @Setter private String password;
+    @Getter @Setter private String phone;
+    @Getter @Setter private String email;
+    @Getter @Setter private String sex;
+    @Getter @Setter private String birthday;
+    @Getter @Setter private int id;
 
-    private File file;
+    @Getter @Setter private File file;
     //文件名
-    private String fileFileName;
+    @Getter @Setter private String fileFileName;
     //文件类型
-    private String fileContentType;
-
-    public String getFileContentType() {
-        return fileContentType;
-    }
-
-    public void setFileContentType(String fileContentType) {
-        this.fileContentType = fileContentType;
-    }
-
-    public String getFileFileName() {
-        return fileFileName;
-    }
-
-    public void setFileFileName(String fileFileName) {
-        this.fileFileName = fileFileName;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public int getRows() {
-        return rows;
-    }
-
-    public void setRows(int rows) {
-        this.rows = rows;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    @Getter @Setter private String fileContentType;
 
     /**
      * 添加或修改用户
