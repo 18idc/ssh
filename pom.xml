@@ -13,7 +13,7 @@
         <!--struts2版本号-->
         <struts.version>2.3.34</struts.version>
         <!-- spring版本号 -->
-        <spring.version>4.3.18.RELEASE</spring.version>
+        <spring.version>4.3.20.RELEASE</spring.version>
         <!--druid版本号-->
         <druid.version>1.1.6</druid.version>
         <!--fastjson 版本号-->
